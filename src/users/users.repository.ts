@@ -1,15 +1,13 @@
-import { EntityRepository, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
+import { Repository } from 'typeorm';
 
-@EntityRepository(User)
 export class UsersRepository extends Repository<User> {
-    // Trouver un utilisateur par son email
-    async findByEmail(email: string): Promise<User | undefined> {
-    const user = await this.findOne({ where: { email } });
-    return user ?? undefined;
+  async findByEmail(email: string): Promise<User | null> {
+    return this.createQueryBuilder('user')
+      .where('user.email = :email', { email })
+      .getOne();
   }
 
-  // Trouver tous les utilisateurs avec une condition avancée
   async findActiveUsers(): Promise<User[]> {
     return this.createQueryBuilder('user')
       .where('user.isActive = :isActive', { isActive: true })

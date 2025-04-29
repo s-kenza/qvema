@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, NotFoundException } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 

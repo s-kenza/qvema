@@ -14,8 +14,9 @@ import { UsersModule } from './users/users.module';
       password: process.env.DATABASE_PASSWORD || '',
       database: process.env.DATABASE_NAME || 'mysql',
       autoLoadEntities: true, // Charge automatiquement les entités
-      synchronize: true, // Synchronisation automatique en dev (désactiver en prod)
-    }), UsersModule,
+      synchronize: false, // Synchronisation automatique en dev (désactiver en prod)
+    }), 
+    UsersModule,
   ]
 })
 export class AppModule {}
