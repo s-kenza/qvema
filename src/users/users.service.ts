@@ -2,12 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { UsersRepository } from './users.repository';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private readonly usersRepository: UsersRepository) {}
+    private readonly usersRepository: typeof UsersRepository) {}
 
   // Récupérer tous les utilisateurs
   async findAll(): Promise<User[]> {
@@ -22,11 +23,14 @@ export class UsersService {
   
   // Récupérer un utilisateur par son email
   async findByEmail(email: string): Promise<User | null> {
-    return this.usersRepository.findByEmail(email);
+    return this.usersRepository.findOneByEmail(email);
   }
 
   // Créer un nouvel utilisateur
   async create(userData: Partial<User>): Promise<User> {
+    if (userData.password != undefined) {
+      userData.password = bcrypt.hashSync(userData.password, 10); // Hash le mot de passe avant de l'enregistrer
+    }
     const newUser = this.usersRepository.create(userData);
     return this.usersRepository.save(newUser);
   }

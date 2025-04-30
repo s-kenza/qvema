@@ -14,7 +14,7 @@ import { UsersRepository } from './users.repository';
       provide: getRepositoryToken(User),
       inject: [getDataSourceToken()],
       useFactory(dataSource: DataSource) {
-        return dataSource.getRepository(User).extend(UsersRepository.prototype);
+        return dataSource.getRepository(User).extend(UsersRepository);
       },
     },
     UsersService,
