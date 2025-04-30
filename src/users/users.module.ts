@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule, getRepositoryToken, getDataSourceToken } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
@@ -19,5 +19,6 @@ import { UsersRepository } from './users.repository';
     },
     UsersService,
   ],
+  exports: [UsersService],
 })
 export class UsersModule {}
