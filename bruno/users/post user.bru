@@ -1,0 +1,19 @@
+meta {
+  name: post user
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{host}}/users
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Kenza",
+    "email": "kenza@test.fr",
+    "password": "kenza"
+  }
+}
