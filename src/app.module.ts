@@ -12,7 +12,7 @@ import { UsersModule } from './users/users.module';
       port: Number(process.env.DATABASE_PORT) || 3306,
       username: process.env.DATABASE_USER || 'root',
       password: process.env.DATABASE_PASSWORD || '',
-      database: process.env.DATABASE_NAME || 'mysql',
+      database: process.env.DATABASE_NAME || 'qvema',
       autoLoadEntities: true, // Charge automatiquement les entités
       synchronize: false, // Synchronisation automatique en dev (désactiver en prod)
     }), 

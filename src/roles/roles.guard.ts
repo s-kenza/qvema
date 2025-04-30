@@ -3,7 +3,7 @@ import { Reflector } from '@nestjs/core';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-    constructor(private reflector: Reflector) {}
+    constructor(private readonly reflector: Reflector) {}
 
     canActivate(context: ExecutionContext): boolean {
         // Récupérer les rôles définis avec @Roles()
@@ -12,7 +12,7 @@ export class RolesGuard implements CanActivate {
             || this.reflector.get<string[]>('roles', context.getClass());
 
         if (!requiredRoles) {
-            return true;
+            return true; // Pas de rôles requis, accès autorisé
         }
 
         const request = context.switchToHttp().getRequest();

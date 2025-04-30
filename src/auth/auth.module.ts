@@ -5,7 +5,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt.strategy';
-import { UsersModule } from 'src/users/users.module';
 
 @Global() // rend le module global
 @Module({
@@ -23,8 +22,6 @@ import { UsersModule } from 'src/users/users.module';
             }),
             inject: [ConfigService],
         }),
-        ConfigModule,
-        UsersModule
     ],
     controllers: [AuthController],
     providers: [AuthService, JwtStrategy],
