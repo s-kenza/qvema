@@ -82,4 +82,15 @@ export class UsersController {
     }
     return this.usersService.update(userId, userData);
   }
+
+  /********************* PROJETS *********************/
+
+  // Route pour créer un projet
+  @Roles('entrepreneur')
+  @UseGuards(AuthGuard('jwt'), RolesGuard) // Protection avec JWT et rôle
+  @Post('projects')
+  async createProject(@Request() req, @Body() projectData: any): Promise<any> {
+    const userId = req.user.uuid;
+    return this.usersService.createProject(userId, projectData);
+  }
 }

@@ -13,7 +13,6 @@ export class UsersService {
 
   // Récupérer tous les utilisateurs
   async findAll(): Promise<User[]> {
-    console.log(this.usersRepository);
     return this.usersRepository.find();
   }
 
@@ -75,6 +74,18 @@ export class UsersService {
     }
     
     Object.assign(user, userData);
+    return this.usersRepository.save(user);
+  }
+
+  /********************* PROJETS *********************/
+
+  // Créer un projet
+  async createProject(uuid: string, projectData: Partial<User>): Promise<User> {
+    const user = await this.findById(uuid);
+    if (!user) {
+      throw new BadRequestException(`User with ID ${uuid} not found`);
+    }
+    user.projects.push(projectData as any); // Assurez-vous que le type est correct
     return this.usersRepository.save(user);
   }
 }
