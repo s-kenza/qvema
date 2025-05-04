@@ -37,9 +37,12 @@ export class UsersService {
   }
 
   // Supprimer un utilisateur
-  async remove(id: string): Promise<void> {
-    this.logger.log(`Deleting user with ID: ${id}`);
-    await this.usersRepository.delete(id);
+  async remove(uuid: string): Promise<void> {
+    const user = await this.findById(uuid);
+    if (!user) {
+      throw new BadRequestException(`User with ID ${uuid} not found`);
+    }
+    await this.usersRepository.remove(user);
   }
 
   // Mettre à jour un utilisateur

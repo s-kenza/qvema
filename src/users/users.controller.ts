@@ -2,12 +2,16 @@ import { Controller, Get, Post, Body, Param, Delete, NotFoundException, UseGuard
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { AuthGuard } from '@nestjs/passport';
+import { Roles } from 'src/roles/roles.decorator';
+import { RolesGuard } from 'src/roles/roles.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   // Route pour récupérer tous les utilisateurs
+  @Roles('admin') // Protection avec le rôle admin
+  @UseGuards(AuthGuard('jwt'), RolesGuard) // Protection avec JWT et rôle
   @Get()
   async getAllUsers(): Promise<User[]> {
     return this.usersService.findAll();
@@ -40,13 +44,19 @@ export class UsersController {
   }
 
   // Route pour supprimer un utilisateur
-  @Delete(':id')
-  async deleteUser(@Param('id') id: string): Promise<void> {
-    const user = await this.usersService.findById(id);
+  @Roles('admin')
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Delete(':uuid')
+  async deleteUser(@Param('uuid') uuid: string): Promise<{ message: string; user: User }> {
+    const user = await this.usersService.findById(uuid);
     if (!user) {
-      throw new NotFoundException(`User with ID ${id} not found`);
+      throw new NotFoundException(`User with UUID ${uuid} not found`);
     }
-    await this.usersService.remove(id);
+    await this.usersService.remove(uuid);
+    return { 
+      message: 'Utilisateur supprimé avec succès',
+      user: user,
+    };
   }
 
   // Route pour consulter son profil

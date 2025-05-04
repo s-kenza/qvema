@@ -16,4 +16,12 @@
         where: { email },
       });
     },
+
+    remove(this: Repository<User>, user: User) {
+      return this.createQueryBuilder('user')
+        .delete()
+        .from(User)
+        .where('user.uuid = :uuid', { uuid: user.uuid })
+        .execute();
+    }
   });
