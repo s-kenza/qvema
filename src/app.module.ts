@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, Logger } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
@@ -12,6 +12,7 @@ import { typeOrmConfig } from './config/typeorm.config'; // Assurez-vous que le 
      typeOrmConfig), 
     UsersModule,
     AuthModule,
-  ]
+  ],
+  providers: [Logger],
 })
 export class AppModule {}
