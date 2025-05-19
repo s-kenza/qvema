@@ -2,6 +2,7 @@ import { DataSourceOptions } from "typeorm";
 import { SeederOptions } from "typeorm-extension";
 import { User } from "../users/entities/user.entity";
 import { Project } from "src/projects/entities/project.entity";
+import { Interest } from "src/interests/entities/interest.entity";
 
 export const typeOrmConfig: DataSourceOptions & SeederOptions = {
     type: 'mysql',
@@ -12,7 +13,7 @@ export const typeOrmConfig: DataSourceOptions & SeederOptions = {
     database: process.env.DB_NAME || 'qvema',
     synchronize: process.env.NODE_ENV !== 'production',
     ssl: false,
-    entities: [User, Project],
+    entities: [User, Project, Interest],
     seeds: ['src/seeds/**/*{.ts,.js}'],
     factories: ['src/factories/**/*{.ts,.js}'],
 };
