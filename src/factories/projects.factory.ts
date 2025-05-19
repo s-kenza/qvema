@@ -8,6 +8,6 @@ export default setSeederFactory(Project, () => {
     project.description = faker.lorem.paragraph();
     project.budget = parseFloat(faker.commerce.price());
     project.category = faker.commerce.department();
-    project.ownerId = ''; // Sera défini dans le seeder
+    project.createdAt = faker.date.recent();
     return project;
-})
+});

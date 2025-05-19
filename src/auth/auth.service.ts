@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/
 import * as bcrypt from 'bcrypt';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import { UserRole } from 'src/enums/user-role.enum';
 
 @Injectable()
 export class AuthService {
@@ -23,11 +24,11 @@ export class AuthService {
         return { access_token: this.jwtService.sign(payload) };
     }
 
-    async register(firstname: string, lastname: string, email: string, password: string) {
+    async register(firstname: string, lastname: string, email: string, password: string, role: UserRole) {
         if (!firstname || !lastname) {
             throw new BadRequestException('Le nom et prénom sont obligatoires.');
         }
-        
+
         if (!email || !password) {
             throw new BadRequestException(" L'email et le mot de passe sont obligatoires.");
         }
@@ -44,6 +45,6 @@ export class AuthService {
         if (existingUser) {
             throw new UnauthorizedException('Email déjà utilisé.');
         }
-        return this.usersService.create({ firstname, lastname, email, password });
+        return this.usersService.create({ firstname, lastname, email, password, role });
     }
 }

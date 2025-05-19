@@ -3,6 +3,7 @@ import { UsersRepository } from './users.repository';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
+import { UserRole } from 'src/enums/user-role.enum';
 
 @Injectable()
 export class UsersService {
@@ -39,7 +40,7 @@ export class UsersService {
   async remove(uuid: string): Promise<void> {
     const user = await this.findById(uuid);
     if (!user) {
-      throw new BadRequestException(`User with ID ${uuid} not found`);
+      throw new BadRequestException(`Utilisateur avec cet ID non trouvé ${uuid}`);
     }
     await this.usersRepository.remove(user);
   }
@@ -60,16 +61,16 @@ export class UsersService {
     // Vérifier si l'utilisateur existe
     const user = await this.findById(uuid);
     if (!user) {
-      throw new Error(`User with ID ${uuid} not found`);
+      throw new Error(`Utilisateur avec cet ID non trouvé ${uuid}`);
     }
     if (userData.password != undefined) {
       userData.password = bcrypt.hashSync(userData.password, 10); // Hash le mot de passe avant de l'enregistrer
     }
 
     // Vérifier le role qui doit appartenir à l'enum
-    if (userData.role && !['entrepreneur', 'investor', 'admin'].includes(userData.role)) {
+    if (userData.role && !Object.values(UserRole).includes(userData.role)) {
       throw new BadRequestException(
-        `Le rôle '${userData.role}' est invalide. Les rôles autorisés sont: entrepreneur, investor, admin`
+        `Le rôle '${userData.role}' est invalide. Les rôles autorisés sont: entrepreneur, investisseur, admin`
       );
     }
 

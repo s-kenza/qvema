@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { User } from "../../users/entities/user.entity";
 
 @Entity({ name: "project" }) // Explicit table name
 export class Project {
@@ -17,6 +18,14 @@ export class Project {
     @Column({ name: "category" })
     category: string;
 
-    @Column({ name: "ownerId" })
-    ownerId: string; // Assuming 'uuid' is a string type
+    // Clé étrangère explicite
+    @ManyToOne(() => User, { nullable: false, onDelete: "CASCADE" })
+    @JoinColumn({ name: "ownerId" })
+    owner: User;
+
+    @Column()
+    ownerId: string;
+
+    @Column({ name: "createdAt", type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+    createdAt: Date;
 }

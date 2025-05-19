@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { Project } from '../../projects/entities/project.entity';
+import { UserRole } from 'src/enums/user-role.enum';
 
 @Entity({ name: 'user' }) // Explicit table name
 export class User {
@@ -19,8 +20,8 @@ export class User {
   lastname: string;
 
   // Enum for user roles
-  @Column({ name: 'role', type: 'enum', enum: ['entrepreneur', 'investor', 'admin'], default: 'entrepreneur' })
-  role: 'entrepreneur' | 'investor' | 'admin';
+  @Column({ name: 'role', type: 'enum', enum: UserRole, default: UserRole.ENTREPRENEUR })
+  role: UserRole;
 
   @Column({ name: 'created_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

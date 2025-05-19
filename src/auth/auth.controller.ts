@@ -1,5 +1,6 @@
 import { Controller, Post, Body, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { UserRole } from 'src/enums/user-role.enum';
 
 @Controller('auth')
 export class AuthController {
@@ -15,7 +16,7 @@ export class AuthController {
   }
 
   @Post('register')
-  async register(@Body() body: { firstname: string, lastname: string, email: string; password: string }) {
-    return this.authService.register(body.firstname, body.lastname, body.email, body.password);
+  async register(@Body() body: { firstname: string, lastname: string, email: string; password: string, role: UserRole }) {
+    return this.authService.register(body.firstname, body.lastname, body.email, body.password, body.role);
   }
 }

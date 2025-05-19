@@ -4,10 +4,11 @@
   import { Repository } from 'typeorm';
 
   export const UsersRepository = AppDataSource.getRepository(User).extend({
-    findByName(this: Repository<User>, firstName: string, lastName: string) {
+    findByName(this: Repository<User>, firstName: string, lastName: string, role: string) {
       return this.createQueryBuilder('user')
         .where('user.firstName = :firstName', { firstName })
         .andWhere('user.lastName = :lastName', { lastName })
+        .andWhere('user.role = :role', { role })
         .getMany();
     },
 

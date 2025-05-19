@@ -27,19 +27,10 @@ export class UsersController {
     return user;
   }
 
-  // Route pour récupérer un utilisateur par son email (nouvelle méthode)
-  @Get('email/:email')
-  async getUserByEmail(@Param('email') email: string): Promise<User | undefined> {
-    const user = await this.usersService.findByEmail(email);
-    if (!user) {
-      throw new NotFoundException(`User with email ${email} not found`);
-    }
-    return user;
-  }
-
   // Route pour créer un nouvel utilisateur
   @Post()
   async createUser(@Body() userData: Partial<User>): Promise<User> {
+    console.log(userData);
     return this.usersService.create(userData);
   }
 
