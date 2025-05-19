@@ -53,7 +53,7 @@ export class UsersController {
       throw new NotFoundException(`User with UUID ${uuid} not found`);
     }
     await this.usersService.remove(uuid);
-    return { 
+    return {
       message: 'Utilisateur supprimé avec succès',
       user: user,
     };
@@ -81,16 +81,5 @@ export class UsersController {
       throw new NotFoundException(`User with ID ${userId} not found`);
     }
     return this.usersService.update(userId, userData);
-  }
-
-  /********************* PROJETS *********************/
-
-  // Route pour créer un projet
-  @Roles('entrepreneur')
-  @UseGuards(AuthGuard('jwt'), RolesGuard) // Protection avec JWT et rôle
-  @Post('projects')
-  async createProject(@Request() req, @Body() projectData: any): Promise<any> {
-    const userId = req.user.uuid;
-    return this.usersService.createProject(userId, projectData);
   }
 }

@@ -20,7 +20,7 @@ export class UsersService {
   async findById(uuid: string): Promise<User | null> {
     return this.usersRepository.findOne({ where: { uuid } });
   }
-  
+
   // Récupérer un utilisateur par son email
   async findByEmail(email: string): Promise<User | null> {
     return this.usersRepository.findOneByEmail(email);
@@ -51,7 +51,7 @@ export class UsersService {
       delete userData.createdAt;
       this.logger.warn('La date de création ne peut pas être modifiée. Cette valeur sera ignorée.');
     }
-    
+
     // Message d'erreur s'il n'y a rien de renseigné ou uniquement createdAt
     if (Object.keys(userData).length === 0) {
       throw new BadRequestException('Aucune donnée valide à mettre à jour');
@@ -72,20 +72,8 @@ export class UsersService {
         `Le rôle '${userData.role}' est invalide. Les rôles autorisés sont: entrepreneur, investor, admin`
       );
     }
-    
+
     Object.assign(user, userData);
-    return this.usersRepository.save(user);
-  }
-
-  /********************* PROJETS *********************/
-
-  // Créer un projet
-  async createProject(uuid: string, projectData: Partial<User>): Promise<User> {
-    const user = await this.findById(uuid);
-    if (!user) {
-      throw new BadRequestException(`User with ID ${uuid} not found`);
-    }
-    user.projects.push(projectData as any); // Assurez-vous que le type est correct
     return this.usersRepository.save(user);
   }
 }

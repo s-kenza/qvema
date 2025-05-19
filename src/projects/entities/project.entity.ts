@@ -1,14 +1,13 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
-import { User } from "./user.entity";
 
 @Entity({ name: "project" }) // Explicit table name
 export class Project {
     @PrimaryGeneratedColumn("uuid", { name: "uuid" })
     uuid: string;
-    
+
     @Column({ name: "title" })
     title: string;
-    
+
     @Column({ name: "description" })
     description: string;
 
