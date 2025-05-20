@@ -3,6 +3,9 @@ import { SeederOptions } from "typeorm-extension";
 import { User } from "../users/entities/user.entity";
 import { Project } from "src/projects/entities/project.entity";
 import { Interest } from "src/interests/entities/interest.entity";
+import UserSeeder from "src/seeds/users.seeder";
+import ProjectSeeder from "src/seeds/projects.seeder";
+import InterestSeeder from "src/seeds/interests.seeder";
 
 export const typeOrmConfig: DataSourceOptions & SeederOptions = {
     type: 'mysql',
@@ -14,6 +17,6 @@ export const typeOrmConfig: DataSourceOptions & SeederOptions = {
     synchronize: process.env.NODE_ENV !== 'production',
     ssl: false,
     entities: [User, Project, Interest],
-    seeds: ['src/seeds/**/*{.ts,.js}'],
+    seeds: [UserSeeder, ProjectSeeder, InterestSeeder],
     factories: ['src/factories/**/*{.ts,.js}'],
 };

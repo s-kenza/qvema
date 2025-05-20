@@ -18,13 +18,10 @@ export class Project {
     @Column({ name: "category" })
     category: string;
 
-    // Clé étrangère explicite
-    @ManyToOne(() => User, { nullable: false, onDelete: "CASCADE" })
+    // User relation
+    @ManyToOne(() => User, user => user.projects, { nullable: false, onDelete: 'CASCADE' })
     @JoinColumn({ name: "ownerId" })
     owner: User;
-
-    @Column()
-    ownerId: string;
 
     @Column({ name: "createdAt", type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
     createdAt: Date;

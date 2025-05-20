@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Project } from '../../projects/entities/project.entity';
 import { UserRole } from 'src/enums/user-role.enum';
 
@@ -27,6 +27,6 @@ export class User {
   createdAt: Date;
 
   // Projects relation
-  @Column({ name: 'projects', type: 'json', nullable: true })
+  @OneToMany(() => Project, project => project.owner)
   projects: Project[];
 }

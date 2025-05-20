@@ -8,16 +8,23 @@ export default class ProjectSeeder implements Seeder {
         dataSource: DataSource,
         factoryManager: SeederFactoryManager,
     ): Promise<void> {
-        const userRepository = dataSource.getRepository(User);
-        const users = await userRepository.find();
-
         const projectFactory = factoryManager.get(Project);
 
-        for (let i = 0; i < 5; i++) {
-            const randomUser = users[Math.floor(Math.random() * users.length)];
-            await projectFactory.save({
-                owner: randomUser,
-            });
+        const userRepo = dataSource.getRepository(User);
+        const users = await userRepo.find();
+        console.log('Found users: ', users.length)
+
+         if (users.length === 0) {
+            console.log('No users found — skipping project creation.');
+            return;
         }
+
+        await Promise.all(
+            users.slice(0, 5).map(async (user) => {
+                const project = await projectFactory.make();
+                project.owner = user;
+                return dataSource.getRepository(Project).save(project);
+            })
+        )
     }
 }
