@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { User } from "../../users/entities/user.entity";
 import { Interest } from "src/interests/entities/interest.entity";
+import { Investment } from "src/investments/entities/investment.entity";
 
 @Entity({ name: "project" }) // Explicit table name
 export class Project {
@@ -31,4 +32,8 @@ export class Project {
     @ManyToOne(() => Interest, interest => interest.projects, { nullable: false, onDelete: 'CASCADE' })
     @JoinColumn({ name: "interestId" })
     interest: Interest;
+
+    // Investment relation
+    @OneToMany(() => Investment, investment => investment.project)
+    investments: Investment[];
 }
