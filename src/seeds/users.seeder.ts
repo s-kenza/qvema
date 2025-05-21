@@ -1,6 +1,7 @@
 import { Seeder, SeederFactoryManager } from 'typeorm-extension';
 import { DataSource } from 'typeorm';
 import { User } from '../users/entities/user.entity';
+import { Interest } from 'src/interests/entities/interest.entity';
 
 export default class UserSeeder implements Seeder {
     public async run (
@@ -8,8 +9,15 @@ export default class UserSeeder implements Seeder {
         factoryManager: SeederFactoryManager,
     ): Promise<void> {
         const userFactory = factoryManager.get(User);
+        const interestRepo = dataSource.getRepository(Interest);
 
-        // Enregistre 5 utilisateurs différents en bdd
-        await userFactory.saveMany(5);
+        const interests = await interestRepo.find();
+
+        for (let i = 0; i < 5; i++) {
+            const user = await userFactory.make();
+            const randomInterest = interests[Math.floor(Math.random() * interests.length)];
+            user.interests = [randomInterest];
+            await dataSource.getRepository(User).save(user);
+        }
     }
 }

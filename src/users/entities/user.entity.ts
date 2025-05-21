@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, JoinTable } from 'typeorm';
 import { Project } from '../../projects/entities/project.entity';
 import { UserRole } from 'src/enums/user-role.enum';
+import { Interest } from 'src/interests/entities/interest.entity';
 
 @Entity({ name: 'user' }) // Explicit table name
 export class User {
@@ -29,4 +30,9 @@ export class User {
   // Projects relation
   @OneToMany(() => Project, project => project.owner)
   projects: Project[];
+
+  // Interests relation
+  @ManyToMany(() => Interest, interest => interest.users, { cascade: true })
+  @JoinTable()
+  interests: Interest[];
 }

@@ -1,5 +1,6 @@
+import { Project } from "src/projects/entities/project.entity";
 import { User } from "src/users/entities/user.entity";
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToMany } from "typeorm";
 
 @Entity({ name: "interest" })
 export class Interest {
@@ -11,4 +12,12 @@ export class Interest {
 
     @Column({ name: "createdAt", type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
     createdAt: Date;
+
+    // ManyToMany relation with User
+    @ManyToMany(() => User, user => user.interests)
+    users: User[];
+
+    // OneToMany relation with Project
+    @OneToMany(() => Project, project => project.interest)
+    projects: Project[];
 }

@@ -17,6 +17,6 @@ export const typeOrmConfig: DataSourceOptions & SeederOptions = {
     synchronize: process.env.NODE_ENV !== 'production',
     ssl: false,
     entities: [User, Project, Interest],
-    seeds: [UserSeeder, ProjectSeeder, InterestSeeder],
+    seeds: [InterestSeeder, UserSeeder, ProjectSeeder],
     factories: ['src/factories/**/*{.ts,.js}'],
 };
