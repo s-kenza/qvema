@@ -9,4 +9,5 @@
         .where('interest.uuid = :uuid', { uuid })
         .getOne();
     }
+    
   });

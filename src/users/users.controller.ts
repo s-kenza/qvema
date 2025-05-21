@@ -22,7 +22,7 @@ export class UsersController {
   async getUserById(@Param('id') id: string): Promise<User> {
     const user = await this.usersService.findById(id);
     if (!user) {
-      throw new NotFoundException(`User with ID ${id} not found`);
+      throw new NotFoundException(`Utilisateur avec cet ID non trouvé : ${id}`);
     }
     return user;
   }
@@ -41,7 +41,7 @@ export class UsersController {
   async deleteUser(@Param('uuid') uuid: string): Promise<{ message: string; user: User }> {
     const user = await this.usersService.findById(uuid);
     if (!user) {
-      throw new NotFoundException(`User with UUID ${uuid} not found`);
+      throw new NotFoundException(`User with UUID ${uuid}`);
     }
     await this.usersService.remove(uuid);
     return {
@@ -57,7 +57,7 @@ export class UsersController {
     const userId = req.user.uuid;
     const user = await this.usersService.findById(userId);
     if (!user) {
-      throw new NotFoundException(`User with ID ${userId} not found`);
+      throw new NotFoundException(`Utilisateur avec cet ID non trouvé : ${userId}`);
     }
     return user;
   }
@@ -69,7 +69,7 @@ export class UsersController {
     const userId = req.user.uuid;
     const user = await this.usersService.findById(userId);
     if (!user) {
-      throw new NotFoundException(`User with ID ${userId} not found`);
+      throw new NotFoundException(`Utilisateur avec cet ID non trouvé : ${userId}`);
     }
     return this.usersService.update(userId, userData);
   }
