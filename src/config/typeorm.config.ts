@@ -7,6 +7,7 @@ import UserSeeder from "src/seeds/users.seeder";
 import ProjectSeeder from "src/seeds/projects.seeder";
 import InterestSeeder from "src/seeds/interests.seeder";
 import { Investment } from "src/investments/entities/investment.entity";
+import InvestmentSeeder from "src/seeds/investments.seeder";
 
 export const typeOrmConfig: DataSourceOptions & SeederOptions = {
     type: 'mysql',
@@ -18,6 +19,6 @@ export const typeOrmConfig: DataSourceOptions & SeederOptions = {
     synchronize: process.env.NODE_ENV !== 'production',
     ssl: false,
     entities: [User, Project, Interest, Investment],
-    seeds: [InterestSeeder, UserSeeder, ProjectSeeder],
+    seeds: [InterestSeeder, UserSeeder, ProjectSeeder, InvestmentSeeder],
     factories: ['src/factories/**/*{.ts,.js}'],
 };

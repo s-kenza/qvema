@@ -1,11 +1,12 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { UserRole } from 'src/enums/user-role.enum';
 import { Roles } from 'src/roles/roles.decorator';
 import { RolesGuard } from 'src/roles/roles.guard';
 
-@Roles('admin') // Appliquer à tout le contrôleur
+@Roles(UserRole.ADMIN) // Appliquer à tout le contrôleur
 @UseGuards(AuthGuard('jwt'), RolesGuard) // Protection avec JWT et rôles
-@Controller('admin')
+@Controller(UserRole.ADMIN)
 export class AdminController {
     @Get()
     getAdminDashboard() {

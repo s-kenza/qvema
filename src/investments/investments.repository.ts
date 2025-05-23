@@ -4,5 +4,4 @@
   import { Repository } from 'typeorm';
 
   export const InvestmentsRepository = AppDataSource.getRepository(Investment).extend({
-
   });

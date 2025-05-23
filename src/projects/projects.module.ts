@@ -5,9 +5,10 @@ import { ProjectsService } from './projects.service';
 import { ProjectsController } from './projects.controller';
 import { DataSource } from 'typeorm';
 import { ProjectsRepository } from './projects.repository';
+import { InterestsModule } from 'src/interests/interests.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Project])],
+  imports: [TypeOrmModule.forFeature([Project]), InterestsModule],
   controllers: [ProjectsController],
   providers: [
     {

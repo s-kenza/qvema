@@ -52,5 +52,18 @@ export class InterestsService {
       return projects;
     }
 
-    // Associer des centres d'intérêt à un utilisateur
+    // Consulter les centres d'intérêt par nom
+    async findByName(name: string): Promise<Interest | null> {
+      if (!name) {
+        throw new BadRequestException('Le nom de l\'intérêt est requis');
+      }
+      const interest = await this.interestsRepository.findOne({ where: { name } });
+      if (!interest) {
+        // Afficher une erreur si aucun centre d'intérêt n'est trouvé et montrer la liste des centres d'intérêt disponibles
+        const allInterests = await this.interestsRepository.find();
+        const availableInterests = allInterests.map(interest => interest.name).join(', ');
+        throw new NotFoundException(`Aucun centre d'intérêt trouvé avec le nom "${name}". Voici les centres d'intérêt disponibles : ${availableInterests}`);
+      }
+      return interest;
+    }
 }
