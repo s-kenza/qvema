@@ -12,6 +12,18 @@ export class InvestmentsService {
     private readonly investmentsRepository: typeof InvestmentsRepository,
     private readonly logger: Logger) {}
 
+    async findAll(): Promise<Investment[]> {
+      const investments = await this.investmentsRepository
+      .createQueryBuilder('investment')
+      .innerJoinAndSelect('investment.investor', 'investor')
+      .innerJoinAndSelect('investment.project', 'project')
+      .getMany();
+      if (investments.length === 0) {
+          throw new NotFoundException('Aucun investissement trouvé');
+      }
+      return investments;
+    }
+
     async findByInvestorId(investorId: string): Promise<Investment[]> {
       const investments = await this.investmentsRepository
       .createQueryBuilder('investment')
