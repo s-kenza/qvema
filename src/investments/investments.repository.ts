@@ -4,4 +4,11 @@
   import { Repository } from 'typeorm';
 
   export const InvestmentsRepository = AppDataSource.getRepository(Investment).extend({
+    createInvestment: async function (investmentData, userId) {
+      const investment = this.create({
+        ...investmentData,
+        investor: { uuid: userId },
+      });
+      return await this.save(investment);
+    }
   });
