@@ -69,17 +69,19 @@ export class ProjectsController {
     @UseGuards(AuthGuard('jwt'), RolesGuard) // Protection avec JWT et rôle
     @Put(':uuid')
     async updateProject(@Param('uuid') uuid: string, @Body() projectData: Partial<Project>, @Request() req): Promise<{message: string, project : Partial<Project> }> {
-        const updatedProject = await this.projectsService.update(uuid, projectData);
-        if (!updatedProject) {
+        const project = await this.projectsService.findById(uuid);
+
+        if (!project) {
             throw new NotFoundException('Projet non trouvé');
         }
         // Vérifier si l'entrepreneur qui met à jour le projet est le même que celui qui l'a créé
         const creatorId = req.user?.uuid;
-        console.log('creator: ', creatorId);
-        console.log('project: ', updatedProject);
-        if (updatedProject.owner !== creatorId) {
+        if (project.owner?.uuid !== creatorId) {
             throw new NotFoundException('Vous ne pouvez pas mettre à jour ce projet');
         }
+
+        // Mettre à jour le projet
+        const updatedProject = await this.projectsService.update(uuid, projectData);
 
         return {
             message: 'Projet mis à jour avec succès',
@@ -88,15 +90,26 @@ export class ProjectsController {
     }
 
     // Route pour supprimer un projet
-    @Roles(UserRole.ENTREPRENEUR) // Protection avec le rôle entrepreneur
-    @Roles(UserRole.ADMIN) // Protection avec le rôle admin
+    @Roles(UserRole.ENTREPRENEUR, UserRole.ADMIN) // Protection avec le rôle entrepreneur
     @UseGuards(AuthGuard('jwt'), RolesGuard) // Protection avec JWT et rôle
     @Delete(':uuid')
-    async deleteProject(@Param('uuid') uuid: string): Promise<{ message: string; project: Project }> {
+    async deleteProject(@Param('uuid') uuid: string, @Request() req): Promise<{ message: string; project: Project }> {
         const project = await this.projectsService.findById(uuid);
         if (!project) {
             throw new NotFoundException('Projet non trouvé');
         }
+
+        // Récupérer le rôle et l'ID de l'utilisateur connecté
+        const userRole = req.user?.role;
+        const userId = req.user?.uuid;
+        
+        // Si c'est un admin, on peut supprimer n'importe quel projet
+        // Sinon, vérifier si l'entrepreneur qui supprime le projet est le même que celui qui l'a créé
+        if (userRole !== UserRole.ADMIN && project.owner?.uuid !== userId) {
+            throw new NotFoundException('Vous ne pouvez pas supprimer ce projet');
+        }
+
+        // Supprimer le projet
         await this.projectsService.remove(uuid);
         return {
             message: 'Projet supprimé avec succès',

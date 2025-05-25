@@ -7,6 +7,8 @@
     findById(this: Repository<Project>, uuid: string) {
       return this.createQueryBuilder('project')
         .where('project.uuid = :uuid', { uuid })
+        .leftJoinAndSelect('project.owner', 'owner') // Ajouter cette ligne
+        .leftJoinAndSelect('project.interest', 'interest') // Et celle-ci si nécessaire
         .getOne();
     }
   });

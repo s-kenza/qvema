@@ -12,7 +12,10 @@ export class ProjectsService {
 
     // Consulter un projet par ID
     async findById(uuid: string): Promise<Project | null> {
-      return this.projectsRepository.findById(uuid);
+      return this.projectsRepository.findOne({ 
+        where: { uuid },
+        relations: ['interest', 'owner']
+      });
     }
 
     // Consulter tous les projets

@@ -15,24 +15,29 @@ export class InterestsController {
         return this.interestsService.findAll();
     }
 
-    // Route pour récupérer les centres d'intérêt d'un utilisateur
+    // Route pour récupérer les centres d'intérêt d'un utilisateur connecté
     @UseGuards(AuthGuard('jwt')) // Protection avec JWT
-    @Get('users/:id')
-    async getInterestsByUserId(@Param('id') id: string): Promise<Interest[]> {
-        return this.interestsService.findByUserId(id);
+    @Get('users')
+    async getInterestsByUserId(@Request() req): Promise<Interest[]> {
+        return this.interestsService.findByUserId(req.user.uuid); // Récupération de l'ID de l'utilisateur à partir du token JWT
     }
 
     // Route pour récupérer les projets en fonction des centres d'intérêt
     @UseGuards(AuthGuard('jwt')) // Protection avec JWT
-    @Get('projects/recommended/:id')
-    async getRecommendedProjects(@Param('id') id: string): Promise<Interest[]> {
-        return this.interestsService.findProjectById(id);
+    @Get('projects/recommended')
+    async getProjectsByInterest(@Request() req): Promise<Interest[]> {
+        const userId = req.user.uuid; // Récupération de l'ID de l'utilisateur à partir du token JWT
+        return this.interestsService.findProjectByInterests(userId);
     }
 
-    // Route pour associer des centres d'intérêt à un utilisateur
-    // @UseGuards(AuthGuard('jwt')) // Protection avec JWT
-    // @Post('users/:id')
-    // async addInterestsToUser(@Param('id') id: string, @Body() interests: Partial<Interest>[]): Promise<Interest[]> {
-    //     return this.interestsService.addInterestsToUser(id, interests);
-    // }
+    // Route pour associer des centres d'intérêt à un utilisateur connecté
+    @UseGuards(AuthGuard('jwt')) // Protection avec JWT
+    @Post('users')
+    async addInterestsToUser(@Request() req, @Body() interests: Partial<Interest>[]): Promise<Interest[]> {
+        const userId = req.user.uuid; // Récupération de l'ID de l'utilisateur à partir du token JWT
+        if (!userId) {
+            throw new NotFoundException('Utilisateur non trouvé');
+        }
+        return this.interestsService.addInterestsToUser(userId, interests);
+    }
 }
