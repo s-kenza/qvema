@@ -1,0 +1,759 @@
+{
+	"info": {
+		"_postman_id": "fa6904e2-5f06-4dda-83f1-4817a62d2970",
+		"name": "qvema nestjs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24928171"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = JSON.parse(responseBody);\r",
+									"pm.environment.set(\"token\", res.access_token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"kenza@test.fr\",\r\n    \"password\": \"kenza6\"\r\n}\r\n\r\n// {\r\n//     \"email\": \"bob@test.fr\",\r\n//     \"password\": \"bobbob\"\r\n// }\r\n\r\n// {\r\n//     \"email\": \"alice@test.fr\",\r\n//     \"password\": \"alice6\"\r\n// }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/auth/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lastname\": \"Schuler\",\r\n    \"firstname\": \"Kenza\",\r\n    \"email\": \"kenza@test.fr\",\r\n    \"password\": \"kenza6\",\r\n    \"role\": \"admin\"\r\n}\r\n\r\n// {\r\n//     \"lastname\": \"Bricoleur\",\r\n//     \"firstname\": \"Bob\",\r\n//     \"email\": \"bob@test.fr\",\r\n//     \"password\": \"bobbob\",\r\n//     \"role\": \"entrepreneur\"\r\n// }\r\n\r\n// {\r\n//     \"lastname\": \"Merveilles\",\r\n//     \"firstname\": \"Alice\",\r\n//     \"email\": \"alice@test.fr\",\r\n//     \"password\": \"alice6\",\r\n//     \"role\": \"investisseur\"\r\n// }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/auth/register",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "all users (admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{host}}/users",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/users/profile",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"bob.bricoleur@test.fr\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/users/profile",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/users/036a890b-1c3f-437a-876d-34aaa36b4ead",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"036a890b-1c3f-437a-876d-34aaa36b4ead"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "projects",
+			"item": [
+				{
+					"name": "all projects",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/projects",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "project",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/projects/186086d9-f8c9-404d-8200-6adfe8cd4fb9",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"projects",
+								"186086d9-f8c9-404d-8200-6adfe8cd4fb9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "projects",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// {\r\n//     \"title\": \"Test\",\r\n//     \"description\": \"test\",\r\n//     \"budget\": 100,\r\n//     \"category\": \"IT\"\r\n// }\r\n\r\n// {\r\n//     \"title\": \"Jardinage\",\r\n//     \"description\": \"On jardine !\",\r\n//     \"budget\": 10,\r\n//     \"category\": \"Entretien\"\r\n// }\r\n\r\n{\r\n    \"title\": \"Peinture\",\r\n    \"description\": \"On peint !\",\r\n    \"budget\": 50,\r\n    \"category\": \"Outdoors\"\r\n}\r\n\r\n// {\r\n//     \"title\": \"Cinéma\",\r\n//     \"description\": \"On regarde des films !\",\r\n//     \"budget\": 12,\r\n//     \"category\": \"Jewelry\"\r\n// }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/projects",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "project",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"TEST\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/projects/46ed6c5b-84dd-4c6a-918f-586bbd731b5a",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"projects",
+								"46ed6c5b-84dd-4c6a-918f-586bbd731b5a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "project",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/projects/a3261adb-10e3-4395-b772-036186f22d06",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"projects",
+								"a3261adb-10e3-4395-b772-036186f22d06"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "interests",
+			"item": [
+				{
+					"name": "interests",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/interests",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"interests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "interests of a user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/interests/users",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"interests",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "interests project",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/interests/projects/recommended",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"interests",
+								"projects",
+								"recommended"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "interests user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// {\r\n//     \"name\": \"Computers\"\r\n// }\r\n\r\n[\r\n    {\r\n        \"name\": \"Music\"\r\n    },\r\n    {\r\n        \"name\": \"Movies\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/interests/users",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"interests",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "investments",
+			"item": [
+				{
+					"name": "investments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/investments",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"investments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "investments project",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/investments/project/438331ac-c3d4-4eec-a94c-3ae4aed3a3c2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"investments",
+								"project",
+								"438331ac-c3d4-4eec-a94c-3ae4aed3a3c2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "investments",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 1000,\r\n    \"project\": {\r\n        \"uuid\": \"438331ac-c3d4-4eec-a94c-3ae4aed3a3c2\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/investments",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"investments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "investments",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/investments/b557f129-7121-4263-b3b6-3d1cb249b3f1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"investments",
+								"b557f129-7121-4263-b3b6-3d1cb249b3f1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "all users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/admin/users",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all investments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/admin/investments",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"admin",
+								"investments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/admin/users/4266a0dc-c82c-473d-8322-980e60cdc042",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"admin",
+								"users",
+								"4266a0dc-c82c-473d-8322-980e60cdc042"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}
