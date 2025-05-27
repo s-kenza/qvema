@@ -81,7 +81,7 @@ export class InterestsService {
       if (!userId) {
         throw new BadRequestException('L\'ID de l\'utilisateur est requis');
       }
-      
+
       // Normaliser les données d'entrée pour garantir qu'on a un tableau
       const interestsArray = Array.isArray(interests) ? interests : [interests];
       
@@ -164,8 +164,10 @@ export class InterestsService {
         // Retourner les intérêts mis à jour
         return this.findByUserId(userId);
       } catch (error) {
+        // Récupérer les centres d'intérêt de l'utilisateur
+        const userInterests = await this.findByUserId(userId);
         this.logger.error(`Erreur lors de l'association des intérêts à l'utilisateur: ${error.message}`);
-        throw new BadRequestException(`Erreur lors de l'association des intérêts: ${error.message}`);
+        throw new BadRequestException(`Vous avez déjà ajouté ces centres d'intérêt ou une erreur s'est produite lors de l'association des intérêts à l'utilisateur. Voici vos centres d'intérêt déjà associés : ${userInterests.map(interest => interest.name).join(', ')}`);
       }
     }
 }
