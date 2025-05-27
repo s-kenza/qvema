@@ -13,7 +13,7 @@ export default class UserSeeder implements Seeder {
 
         const interests = await interestRepo.find();
 
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 10; i++) {
             const user = await userFactory.make();
             const randomInterest = interests[Math.floor(Math.random() * interests.length)];
             user.interests = [randomInterest];
