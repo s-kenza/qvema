@@ -10,32 +10,20 @@ export default class InterestSeeder implements Seeder {
         const interestFactory = factoryManager.get(Interest);
         const interestRepo = dataSource.getRepository(Interest);
 
-        // Nombre de centres d'intérêts à créer
-        const targetCount = 10;
+        const numberToCreate = 10;
 
-        // Récupérer les intérêts existants
-        const existingCount = await interestRepo.count();
-        const needToCreate = Math.max(0, targetCount - existingCount);
+        for (let i = 0; i < numberToCreate; i++) {
+            let interest = await interestFactory.make();
 
-        // Pour éviter la création de doublons
-        if (needToCreate > 0) {
-            for (let i = 0; i < needToCreate; i++) {
-                const interest = await interestFactory.make();
-                
-                // Vérifier s'il existe déjà
-                const exists = await interestRepo.findOne({
-                    where: { name: interest.name }
-                });
-
-                // Ne sauvegarder que s'il n'existe pas
-                if (!exists) {
-                    await interestRepo.save(interest);
-                } else {
-                    console.log(`L'intérêt ${interest.name} existe déjà, génération d'un nouveau...`);
-                }
+            // S'assurer de générer un nom unique à chaque fois (si nécessaire)
+            while (await interestRepo.findOne({ where: { name: interest.name } })) {
+                console.log(`L'intérêt "${interest.name}" existe déjà, génération d'un nouveau...`);
+                interest = await interestFactory.make();
             }
-        } else {
-            console.log(`Il y a déjà ${existingCount} centres d'intérêts, aucun besoin de créer de nouveaux.`);
+
+            await interestRepo.save(interest);
         }
+
+        console.log(`✅ Interest seeding terminé : ${numberToCreate} nouveaux centres d'intérêt créés.`);
     }
 }

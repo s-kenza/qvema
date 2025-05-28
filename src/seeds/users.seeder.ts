@@ -18,9 +18,7 @@ export default class UserSeeder implements Seeder {
         // Créer un tableau contenant tous les rôles disponibles
         const allRoles = Object.values(UserRole);
         
-        // Phase 1: Création d'au moins un utilisateur de chaque rôle
-        console.log('Phase 1: Création d\'au moins un utilisateur de chaque rôle');
-        
+        // Phase 1: Création d'au moins un utilisateur de chaque rôle        
         for (const role of allRoles) {
             const user = await userFactory.make();
             user.role = role;
@@ -38,12 +36,9 @@ export default class UserSeeder implements Seeder {
             }
             
             await userRepo.save(user);
-            console.log(`Utilisateur créé avec le rôle ${role}: ${user.email}`);
         }
         
-        // Phase 2: Création d'utilisateurs supplémentaires aléatoires
-        console.log('Phase 2: Création d\'utilisateurs supplémentaires aléatoires');
-        
+        // Phase 2: Création d'utilisateurs supplémentaires aléatoires        
         // Calculer combien d'utilisateurs supplémentaires sont nécessaires
         const requiredCount = allRoles.length; // Nombre minimum d'utilisateurs (1 par rôle)
         const targetCount = 10; // Nombre total d'utilisateurs souhaité
@@ -67,6 +62,6 @@ export default class UserSeeder implements Seeder {
             await userRepo.save(user);
         }
         
-        console.log(`Seeding terminé: ${await userRepo.count()} utilisateurs au total`);
+        console.log(`✅ User seeding terminé: ${await userRepo.count()} utilisateurs au total`);
     }
 }

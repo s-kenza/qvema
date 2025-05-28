@@ -11,6 +11,7 @@ export default class InvestmentSeeder implements Seeder {
         factoryManager: SeederFactoryManager,
     ): Promise<void> {
         const investmentFactory = factoryManager.get(Investment);
+        const investmentRepo = dataSource.getRepository(Investment);
 
         const projectRepo = dataSource.getRepository(Project);
         const projects = await projectRepo.find();
@@ -19,7 +20,7 @@ export default class InvestmentSeeder implements Seeder {
         const investors = await userRepo.find({ where: { role: UserRole.INVESTOR } });
 
         if (investors.length === 0) {
-            console.log('Aucun investisseur trouvé. Aucun investissement créé.');
+            console.log('❌ Aucun investisseur trouvé. Aucun investissement créé.');
             return;
         }
 
@@ -32,8 +33,11 @@ export default class InvestmentSeeder implements Seeder {
                 const randomInvestor = investors[Math.floor(Math.random() * investors.length)];
                 investment.investor = randomInvestor;
 
-                return dataSource.getRepository(Investment).save(investment);
+                await investmentRepo.save(investment);
             })
         );
+
+        const totalInvestments = await investmentRepo.count();
+        console.log(`✅ Investment seeding terminé : ${totalInvestments} investissements au total.`);
     }
 }

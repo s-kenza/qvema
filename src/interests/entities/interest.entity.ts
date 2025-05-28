@@ -1,6 +1,6 @@
 import { Project } from "src/projects/entities/project.entity";
 import { User } from "src/users/entities/user.entity";
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToMany, Unique } from "typeorm";
 
 @Entity({ name: "interest" })
 export class Interest {
@@ -8,6 +8,7 @@ export class Interest {
     uuid: string;
 
     @Column({ name: "name" })
+    @Unique(['name'])
     name: string;
 
     @Column({ name: "createdAt", type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
