@@ -23,11 +23,15 @@ export default class ProjectSeeder implements Seeder {
                 const project = await projectFactory.make();
                 project.owner = entrepreneur;
 
+                // Sélectionner un intérêt aléatoire
                 const randomInterest = interests[Math.floor(Math.random() * interests.length)];
                 project.interest = randomInterest;
+                
+                // Faire correspondre la catégorie avec le nom de l'intérêt
+                project.category = randomInterest.name;
 
                 return dataSource.getRepository(Project).save(project);
             })
-        )
+        );
     }
 }

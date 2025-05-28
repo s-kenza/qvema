@@ -7,7 +7,6 @@ export default setSeederFactory(Project, () => {
     project.title = faker.commerce.productName();
     project.description = faker.lorem.paragraph();
     project.budget = parseFloat(faker.commerce.price());
-    project.category = faker.commerce.department();
     project.createdAt = faker.date.recent();
     return project;
 });
