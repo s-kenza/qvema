@@ -1,98 +1,192 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# API de mise en relation Entreprises & Investisseurs
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+---
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🎯 1. Contexte
 
-## Description
+Cette API REST sécurisée, développée avec **NestJS**, **MySQL** et **TypeORM**, permet de mettre en relation des entrepreneurs et des investisseurs.  
+Les entrepreneurs peuvent publier leurs projets et les investisseurs peuvent les découvrir, soutenir et investir selon leurs centres d’intérêt.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Project setup
+## 🚀 2. Installation & Lancement
 
-```bash
-$ npm install
-```
+### Prérequis
 
-## Compile and run the project
+- Node.js >= 16.x  
+- MySQL (exemple : WampServer, XAMPP)  
+- npm  
 
-```bash
-# development
-$ npm run start
+### Étapes
 
-# watch mode
-$ npm run start:dev
+1. **Cloner le dépôt**
 
-# production mode
-$ npm run start:prod
-```
+   ```bash
+   git clone <url_du_repo>
+   cd <nom_du_repo>
+   ```
 
-## Run tests
+2. **Installer les dépendances**
 
-```bash
-# unit tests
-$ npm run test
+   ```bash
+   npm install
+   ```
 
-# e2e tests
-$ npm run test:e2e
+3. **Configurer la base de données**
 
-# test coverage
-$ npm run test:cov
-```
+   * Lancer **MySQL** (via WampServer, XAMPP, ou autre).
+   * Créer une base de données avec le nom défini dans .env (ex: DB_NAME).
 
-## Deployment
+4. **Configurer les variables d'environnement**
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+    Créer un fichier .env à la racine avec au minimum :
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+   ```bash
+    JWT_SECRET=your_jwt_secret
+    JWT_EXPIRES=3600s
+    DB_HOST=localhost
+    DB_PORT=3306
+    DB_USER=root
+    DB_PASSWORD=your_password
+    DB_NAME=your_db_name
+   ```
 
-```bash
-$ npm install -g mau
-$ mau deploy
-```
+5. **Lancer la seed initiale**
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+   ```bash
+   npm run seed:run
+   ```
 
-## Resources
+6. **Démarrer l'API**
 
-Check out a few resources that may come in handy when working with NestJS:
+   ```bash
+   npm run start
+   ```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+---
+## ⚙️ 3. Fonctionnalités
 
-## Support
+### 🧑‍💼 Utilisateurs (Authentification & Gestion)
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+| Fonctionnalité                               | Route                | Accès       |
+|---------------------------------------------|----------------------|-------------|
+| Inscription                                 | `POST /auth/register`| Public      |
+| Connexion (récupération token JWT)          | `POST /auth/login`   | Public      |
+| Consultation profil                         | `GET /users/profile` | Authentifié |
+| Mise à jour profil                         | `PUT /users/profile` | Authentifié |
+| Liste des utilisateurs                      | `GET /users`         | Admin       |
+| Suppression d’un utilisateur                | `DELETE /users/:id`  | Admin       |
 
-## Stay in touch
+- Mot de passe hashé avec bcrypt.
+- JWT obligatoire sur toutes les routes sauf inscription et connexion.
+- Rôles : `entrepreneur`, `investor`, `admin`.
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+---
 
-## License
+### 🚀 Projets (Création & Consultation)
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+| Fonctionnalité                             | Route                 | Accès          |
+|-------------------------------------------|-----------------------|----------------|
+| Création d’un projet                      | `POST /projects`      | Entrepreneur   |
+| Consultation de tous les projets          | `GET /projects`       | Authentifié    |
+| Consultation d’un projet par ID           | `GET /projects/:id`   | Authentifié    |
+| Mise à jour d’un projet                   | `PUT /projects/:id`   | Entrepreneur (créateur) |
+| Suppression d’un projet                   | `DELETE /projects/:id`| Entrepreneur (créateur) ou Admin |
+
+- Projet contient : `title`, `description`, `budget`, `category`, `ownerId`.
+- Seuls les entrepreneurs peuvent créer et modifier leurs projets.
+- Admin peut supprimer n’importe quel projet.
+
+---
+
+### ⛹️ Gestion des centres d’intérêt
+
+| Fonctionnalité                             | Route                   | Accès       |
+|-------------------------------------------|-------------------------|-------------|
+| Lister tous les intérêts                   | `GET /interests`        | Public      |
+| Associer des intérêts à un utilisateur    | `POST /users/interests` | Authentifié |
+| Voir les intérêts d’un utilisateur         | `GET /users/interests`  | Authentifié |
+| Recommander des projets selon intérêts     | `GET /projects/recommended` | Authentifié |
+
+- Exemples d’intérêts : Technologie, Écologie, Finance, etc.
+- Optimisation des recommandations projets selon intérêts.
+
+---
+
+### 💰 Investissements (Gestion des fonds)
+
+| Fonctionnalité                             | Route                          | Accès          |
+|-------------------------------------------|--------------------------------|----------------|
+| Investir dans un projet                   | `POST /investments`             | Investisseur   |
+| Voir ses investissements                  | `GET /investments`              | Investisseur   |
+| Voir investissements d’un projet          | `GET /investments/project/:id` | Authentifié    |
+| Annuler un investissement                 | `DELETE /investments/:id`       | Investisseur   |
+
+- Investissement : `investorId`, `projectId`, `amount`, `date`.
+- Entrepreneurs voient investissements sur leurs projets.
+
+---
+
+### 🛠️ Administration
+
+| Fonctionnalité                             | Route                      | Accès     |
+|-------------------------------------------|----------------------------|-----------|
+| Voir tous les utilisateurs                 | `GET /admin/users`         | Admin     |
+| Supprimer un utilisateur                   | `DELETE /admin/users/:id`  | Admin     |
+| Voir toutes les transactions                | `GET /admin/investments`   | Admin     |
+
+- Admins ont contrôle total sur utilisateurs, projets et investissements.
+
+---
+
+## 🔐 3. Sécurité & Rôles
+
+- Authentification via JWT.
+- Contrôle des accès via `RolesGuard` et décorateurs `@Roles()`.
+- Permissions :
+  - **Entrepreneur** : gestion de ses projets.
+  - **Investisseur** : voir projets, investir, gérer investissements.
+  - **Admin** : gestion complète des utilisateurs, projets, investissements.
+
+---
+
+## 📦 5. Test de l’API avec Postman
+Le dossier postman à la racine contient :
+
+- Environnement.postman_environment.json → à importer comme environnement
+- Collection.postman_collection.json → à importer comme collection
+
+- Importer ces fichiers dans Postman pour tester toutes les routes facilement.
+
+---
+
+## 📚 6. Liens utiles
+- NestJS Documentation
+- TypeORM Documentation
+- JWT Introduction
+- NestJS Guards & Roles
+
+---
+
+## 🏆 7. Résumé
+- API REST sécurisée avec JWT
+- Gestion des utilisateurs, rôles et permissions
+- CRUD complet pour projets et investissements
+- Recommandations personnalisées par centres d’intérêt
+- Administration complète via rôle admin
+
+---
+
+## 👩‍💻 À propos de l'autrice
+
+Développé par **Kenza SCHULER**, étudiante en M2 Ingénierie du Web à l’ESGI Lyon.
+Ce projet s’inscrit dans une démarche d’apprentissage approfondi de l’écosystème **NestJS**, de la gestion des rôles utilisateurs, et de l’implémentation de fonctionnalités métier autour de la mise en relation professionnelle.
+
+💡 **Valeurs du projet** : accessibilité, sécurité, structuration et clarté.
+
+📫 Pour toute question ou collaboration : `kenza.schuler@gmail.com`  
+💼 [LinkedIn](www.linkedin.com/in/kenza-schuler-9aa4ab231) • [GitHub](https://github.com/s-kenza)
+
+---
+
+*Merci pour votre lecture, et au plaisir d’échanger autour de vos idées !* 🌱
