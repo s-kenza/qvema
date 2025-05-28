@@ -64,6 +64,9 @@ export class UsersService {
       throw new Error(`Utilisateur avec cet ID non trouvé ${uuid}`);
     }
     if (userData.password != undefined) {
+      if (userData.password.length < 6) {
+        throw new BadRequestException('Le mot de passe doit contenir au moins 6 caractères');
+      }
       userData.password = bcrypt.hashSync(userData.password, 10); // Hash le mot de passe avant de l'enregistrer
     }
 
