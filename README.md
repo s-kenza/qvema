@@ -22,8 +22,8 @@ Les entrepreneurs peuvent publier leurs projets et les investisseurs peuvent les
 1. **Cloner le dépôt**
 
    ```bash
-   git clone <url_du_repo>
-   cd <nom_du_repo>
+   git clone https://github.com/s-kenza/qvema.git
+   cd qvema
    ```
 
 2. **Installer les dépendances**
@@ -40,6 +40,7 @@ Les entrepreneurs peuvent publier leurs projets et les investisseurs peuvent les
 4. **Configurer les variables d'environnement**
 
     Créer un fichier .env à la racine avec au minimum :
+    *Vous pouvez utiliser le `.env.example` prêt à l'utilisation.*
 
    ```bash
     JWT_SECRET=your_jwt_secret
