@@ -160,7 +160,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"bob.bricoleur@test.fr\"\r\n}",
+							"raw": "{\r\n    \"email\": \"kenza@test.fr\",\r\n    \"interests\": [\r\n        { \"name\": \"Books\" }\r\n    ],\r\n    \"password\": \"kenza6\",\r\n    \"firstname\": \"Kenza\",\r\n    \"lastname\": \"Schuler\",\r\n    \"role\": \"admin\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -196,13 +196,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/users/036a890b-1c3f-437a-876d-34aaa36b4ead",
+							"raw": "{{host}}/users/cd136399-bb25-4f6d-86d8-b18ffd545ca7",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"users",
-								"036a890b-1c3f-437a-876d-34aaa36b4ead"
+								"cd136399-bb25-4f6d-86d8-b18ffd545ca7"
 							]
 						}
 					},
@@ -288,13 +288,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/projects/186086d9-f8c9-404d-8200-6adfe8cd4fb9",
+							"raw": "{{host}}/projects/e6752d42-30ac-4df3-bb3e-5b6fd8627be3",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"projects",
-								"186086d9-f8c9-404d-8200-6adfe8cd4fb9"
+								"e6752d42-30ac-4df3-bb3e-5b6fd8627be3"
 							]
 						}
 					},
@@ -317,7 +317,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "// {\r\n//     \"title\": \"Test\",\r\n//     \"description\": \"test\",\r\n//     \"budget\": 100,\r\n//     \"category\": \"IT\"\r\n// }\r\n\r\n// {\r\n//     \"title\": \"Jardinage\",\r\n//     \"description\": \"On jardine !\",\r\n//     \"budget\": 10,\r\n//     \"category\": \"Entretien\"\r\n// }\r\n\r\n{\r\n    \"title\": \"Peinture\",\r\n    \"description\": \"On peint !\",\r\n    \"budget\": 50,\r\n    \"category\": \"Outdoors\"\r\n}\r\n\r\n// {\r\n//     \"title\": \"Cinéma\",\r\n//     \"description\": \"On regarde des films !\",\r\n//     \"budget\": 12,\r\n//     \"category\": \"Jewelry\"\r\n// }",
+							"raw": "// {\r\n//     \"title\": \"Test\",\r\n//     \"description\": \"test\",\r\n//     \"budget\": 100,\r\n//     \"category\": \"IT\"\r\n// }\r\n\r\n// {\r\n//     \"title\": \"Jardinage\",\r\n//     \"description\": \"On jardine !\",\r\n//     \"budget\": 10,\r\n//     \"category\": \"Entretien\"\r\n// }\r\n\r\n{\r\n    \"title\": \"Peinture\",\r\n    \"description\": \"On peint !\",\r\n    \"budget\": 50,\r\n    \"category\": \"Health\"\r\n}\r\n\r\n// {\r\n//     \"title\": \"Cinéma\",\r\n//     \"description\": \"On regarde des films !\",\r\n//     \"budget\": 12,\r\n//     \"category\": \"Jewelry\"\r\n// }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -353,7 +353,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"description\": \"TEST\"\r\n}",
+							"raw": "{\r\n    \"description\": \"Test\",\r\n    \"interest\": \"Home\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -361,13 +361,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/projects/46ed6c5b-84dd-4c6a-918f-586bbd731b5a",
+							"raw": "{{host}}/projects/12388388-ff41-4c17-920e-794f546479a0",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"projects",
-								"46ed6c5b-84dd-4c6a-918f-586bbd731b5a"
+								"12388388-ff41-4c17-920e-794f546479a0"
 							]
 						}
 					},
@@ -379,13 +379,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/projects/a3261adb-10e3-4395-b772-036186f22d06",
+							"raw": "{{host}}/projects/e6752d42-30ac-4df3-bb3e-5b6fd8627be3",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"projects",
-								"a3261adb-10e3-4395-b772-036186f22d06"
+								"e6752d42-30ac-4df3-bb3e-5b6fd8627be3"
 							]
 						}
 					},
@@ -492,7 +492,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "// {\r\n//     \"name\": \"Computers\"\r\n// }\r\n\r\n[\r\n    {\r\n        \"name\": \"Music\"\r\n    },\r\n    {\r\n        \"name\": \"Movies\"\r\n    }\r\n]",
+							"raw": "// {\r\n//     \"name\": \"Books\"\r\n// }\r\n\r\n// {\r\n//     \"uuid\": \"2ea1b8fc-890d-4177-9677-f912689fe724\"\r\n// }\r\n\r\n// [\r\n//     {\r\n//         \"uuid\": \"4dc60b3d-b014-4f1b-b730-50458498b7e2\"\r\n//     },\r\n//     {\r\n//         \"uuid\": \"ee784d71-d0fc-4627-8fb5-6210b65c5903\"\r\n//     }\r\n// ]\r\n\r\n[\r\n    {\r\n        \"name\": \"Electronics\"\r\n    },\r\n    {\r\n        \"name\": \"Home\"\r\n    }\r\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -572,14 +572,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/investments/project/438331ac-c3d4-4eec-a94c-3ae4aed3a3c2",
+							"raw": "{{host}}/investments/project/12388388-ff41-4c17-920e-794f546479a0",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"investments",
 								"project",
-								"438331ac-c3d4-4eec-a94c-3ae4aed3a3c2"
+								"12388388-ff41-4c17-920e-794f546479a0"
 							]
 						}
 					},
@@ -592,7 +592,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"amount\": 1000,\r\n    \"project\": {\r\n        \"uuid\": \"438331ac-c3d4-4eec-a94c-3ae4aed3a3c2\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"amount\": 1000,\r\n    \"project\": {\r\n        \"uuid\": \"12388388-ff41-4c17-920e-794f546479a0\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -617,13 +617,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/investments/b557f129-7121-4263-b3b6-3d1cb249b3f1",
+							"raw": "{{host}}/investments/alkdazde-6546zeff-frz-fe595ge",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"investments",
-								"b557f129-7121-4263-b3b6-3d1cb249b3f1"
+								"alkdazde-6546zeff-frz-fe595ge"
 							]
 						}
 					},
@@ -708,14 +708,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/admin/users/4266a0dc-c82c-473d-8322-980e60cdc042",
+							"raw": "{{host}}/admin/users/70beb26c-cfcf-4da7-855d-1f837bfd8e65",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"admin",
 								"users",
-								"4266a0dc-c82c-473d-8322-980e60cdc042"
+								"70beb26c-cfcf-4da7-855d-1f837bfd8e65"
 							]
 						}
 					},
