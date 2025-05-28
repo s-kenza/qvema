@@ -32,7 +32,7 @@ export class ProjectsController {
     }
 
     // Route pour créer un nouveau projet
-    @Roles(UserRole.ENTREPRENEUR) // Protection avec le rôle entrepreneur
+    @Roles(UserRole.ENTREPRENEUR, UserRole.ADMIN) // Protection avec le rôle entrepreneur
     @UseGuards(AuthGuard('jwt'), RolesGuard) // Protection avec JWT et rôle
     @Post()
     async createProject(@Body() projectData: Partial<Project>, @Request() req) {
@@ -65,7 +65,7 @@ export class ProjectsController {
     }
 
     // Route pour mettre à jour un projet
-    @Roles(UserRole.ENTREPRENEUR) // Protection avec le rôle entrepreneur
+    @Roles(UserRole.ENTREPRENEUR, UserRole.ADMIN) // Protection avec le rôle entrepreneur
     @UseGuards(AuthGuard('jwt'), RolesGuard) // Protection avec JWT et rôle
     @Put(':uuid')
     async updateProject(@Param('uuid') uuid: string, @Body() projectData: Partial<Project>, @Request() req): Promise<{message: string, project : Partial<Project> }> {

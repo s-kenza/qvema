@@ -13,35 +13,46 @@ export class InvestmentsController {
 
     // Route pour récupérer ses investissements
     @UseGuards(AuthGuard('jwt'), RolesGuard)
-    @Roles(UserRole.INVESTOR)
+    @Roles(UserRole.INVESTOR, UserRole.ADMIN)
     @Get()
     async findAll(@Request() req): Promise<Investment[]> {
         const userId = req.user.uuid;
         return this.investmentsService.findByInvestorId(userId);
     }
 
-    // Route pour voir les investissements d'un projet que ce soit admin investisseur ou entrepreneur (mais un entrepreneur ne peut que voir les investissements d'un projet qu'il a créé)
+    // Route pour voir les investissements d'un projet
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @Get('project/:uuid')
-    async findByProjectId(@Param('uuid') uuid: string, @Request() req): Promise<Investment[]> {
+    async findByProjectId(@Param('uuid') uuid: string, @Request() req): Promise<any> {
         const userId = req.user.uuid;
         const userRole = req.user.role;
 
+        let investments: Investment[] = [];
+
         // Vérification si l'utilisateur est un entrepreneur et s'il est le propriétaire du projet
         if (userRole === UserRole.ADMIN || userRole === UserRole.INVESTOR) {
-            return this.investmentsService.findByProjectId(uuid);
+            investments = await this.investmentsService.findByProjectId(uuid);
+        } else if (userRole === UserRole.ENTREPRENEUR) {
+            investments = await this.investmentsService.findByProjectIdForOwner(uuid, userId);
+        } else {
+            throw new NotFoundException('Vous n\'êtes pas autorisé à voir les investissements de ce projet');
         }
 
-        if (userRole === UserRole.ENTREPRENEUR) {
-            return this.investmentsService.findByProjectIdForOwner(uuid, userId);
+        // Vérification si des investissements ont été trouvés
+        if (!investments || investments.length === 0) {
+            return {
+                message: 'Aucun investissement trouvé pour ce projet',
+                data: []
+            };
         }
 
-        throw new NotFoundException('Vous n\'êtes pas autorisé à voir les investissements de ce projet');
+        // Retourner les investissements trouvés
+        return investments;
     }
 
     // Route pour investir dans un projet
     @UseGuards(AuthGuard('jwt'), RolesGuard)
-    @Roles(UserRole.INVESTOR)
+    @Roles(UserRole.INVESTOR, UserRole.ADMIN)
     @Post()
     async create(@Body() investmentData: Investment, @Request() req): Promise<Investment> {
         const userId = req.user.uuid;

@@ -20,6 +20,6 @@ import { InterestsRepository } from './interests.repository';
     InterestsService,
     Logger
   ],
-  exports: [InterestsService],
+  exports: [InterestsService, getRepositoryToken(Interest)],
 })
 export class InterestsModule {}

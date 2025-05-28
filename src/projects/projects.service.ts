@@ -1,14 +1,20 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { ProjectsRepository } from './projects.repository';
 import { Project } from './entities/project.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Interest } from 'src/interests/entities/interest.entity';
+import { InterestsRepository } from 'src/interests/interests.repository';
 
 @Injectable()
 export class ProjectsService {
   constructor(
     @InjectRepository(Project)
-    private readonly projectsRepository: typeof ProjectsRepository,
-    private readonly logger: Logger) {}
+    private projectsRepository: typeof ProjectsRepository,
+    @InjectRepository(Interest)
+    private interestsRepository: typeof InterestsRepository,
+    private readonly logger: Logger,
+  ) {}
+
 
     // Consulter un projet par ID
     async findById(uuid: string): Promise<Project | null> {
@@ -30,27 +36,42 @@ export class ProjectsService {
       return project;
     }
 
-    // Mettre à jour un projet
-    async update(uuid: string, projectData: Partial<Project>): Promise<Project> {
-      // Ignorer le champ createdAt s'il est présent
-      if (projectData.createdAt) {
-        delete projectData.createdAt;
-        this.logger.warn('La date de création ne peut pas être modifiée. Cette valeur sera ignorée.');
-      }
+    async update(projectId: string, updateData: any): Promise<Project> {
+    const project = await this.projectsRepository.findOne({
+      where: { uuid: projectId },
+      relations: ['interest'], // au cas où tu veux voir l’intérêt actuel
+    });
 
-      // Message d'erreur s'il n'y a rien de renseigné ou uniquement createdAt
-      if (Object.keys(projectData).length === 0) {
-        throw new BadRequestException('Aucune donnée valide à mettre à jour');
-      }
-
-      const project = await this.findById(uuid);
-      if (!project) {
-        throw new BadRequestException(`Projet non trouvé avec cet ID ${uuid}`);
-      }
-      Object.assign(project, projectData);
-      await this.projectsRepository.save(project);
-      return project;
+    if (!project) {
+      throw new NotFoundException(`Projet avec l'ID ${projectId} introuvable`);
     }
+
+    if (updateData.interest) {
+      const interest = await this.interestsRepository.findOne({
+        where: { name: updateData.interest },
+      });
+
+      if (!interest) {
+        const allInterests = await this.interestsRepository.find();
+        const available = allInterests.map(i => i.name).join(', ');
+        throw new NotFoundException(
+          `Le centre d'intérêt "${updateData.interest}" est introuvable. ` +
+          `Centres disponibles : ${available}`
+        );
+      }
+
+      project.interest = interest;
+    }
+
+    // Évite les conflits : supprime manuellement tout champ erroné
+    delete updateData.interest;
+    delete updateData.interestId;
+
+    // Mettre à jour les autres champs s’il y en a
+    Object.assign(project, updateData);
+
+    return await this.projectsRepository.save(project);
+  }
 
     // Supprimer un projet
     async remove(uuid: string): Promise<void> {
